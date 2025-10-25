@@ -2,41 +2,37 @@ let defaultAnswer = Math.floor(Math.random() * 3);
 let humanScore = 0;
 let computerScore = 0;
 
-console.log(getComputerChoice())
-
-console.log(playRound())
-
-
-function randomDefault(){
-    if (defaultAnswer == 0){
-        defaultAnswer = "Rock"
-    } else if (defaultAnswer == 1){
-        defaultAnswer = 'Paper'
-    } else {
-        defaultAnswer = 'Scissors'
-    }
-
-    return defaultAnswer
-};
+console.log("bot has: " + getComputerChoice())
 
 function getComputerChoice(){
    let computerResult = Math.floor(Math.random() * 3);
-   return computerResult;
+   return numbersToWords(computerResult);
 }
 
+function numbersToWords(number){
+    if (number == 0){
+        number = 'rock'
+    } else if (number == 1){
+        number = 'paper'
+    } else {
+        number = 'scissors'
+    }
+    return number;
+};
+
 function getHumanChoice(){
-    let humanResult =  window.prompt("rock paper scissors", randomDefault());
+    let humanResult =  window.prompt("rock paper scissors", numbersToWords(defaultAnswer));
     return humanResult.toLowerCase();
 }
 
 function playRound(humanChoice, computerChoice){
-    if ((humanChoice === 'rock' && computerChoice === 0) || (humanChoice === 'paper' && computerChoice === 1) || (humanChoice === 'scissors' && computerChoice === 2) ){
+    if (humanChoice == computerChoice) {
         alert('Draw');
-    } else if ((humanChoice === 'paper' && computerChoice === 0) || (humanChoice === 'rock' && computerChoice === 2) || (humanChoice === 'scissors' && computerChoice === 1)) {
-        alert('You Win!')
+    } else if ((humanChoice == 'scissors' && computerChoice == 'paper') || (humanChoice == 'rock' && computerChoice == 'scissors') || (humanChoice == 'paper' && computerChoice == 'rock')){
+        alert('You win');
         return humanScore + 1;
-    } else {
-        alert('You lose!')
+    } else if ((humanChoice == 'paper' && computerChoice == 'scissors') || (humanChoice == 'scissors' && computerChoice == 'rock') || (humanChoice == 'rock' && computerChoice == 'paper')) {
+        alert('Bot wins')
         return computerScore + 1
     }
 }
