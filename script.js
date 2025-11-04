@@ -34,18 +34,38 @@
             (humanChoice == 'paper' && computerChoice == 'rock'))
         {
             alert('You win');
-            return humanScore + 1;
+            humanScore += 1
+            return humanScore;
         } else {
             alert('Bot wins')
-            return computerScore + 1;
+            computerScore += 1
+            return computerScore;
         }
     };
 
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
+    function playGame(){
+        playRound(getHumanChoice(), getComputerChoice());
 
-    playRound(humanSelection, computerSelection);
+        playRound(getHumanChoice(), getComputerChoice());
 
+        playRound(getHumanChoice(), getComputerChoice());
+
+        playRound(getHumanChoice(), getComputerChoice());
+
+        playRound(getHumanChoice(), getComputerChoice());
+
+        if (humanScore > computerScore){
+            alert('YOU ARE THE WINNER!!!!!!')
+        } else if (humanScore < computerScore){
+            alert('you\'re loser man.')
+        } else {
+            alert("ITS DRAAAAW")
+        }
+        
+        alert("Game over!!!!!")
+    }
+
+    playGame()
 
     console.log(humanScore, computerScore);
     
