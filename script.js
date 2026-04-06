@@ -1,12 +1,8 @@
-    let defaultAnswer = Math.floor(Math.random() * 3); 
     let humanScore = 0;
     let computerScore = 0;
+    let gameActive = true; 
 
-    function getComputerChoice(){
-    let computerResult = Math.floor(Math.random() * 3);
-    return numbersToWords(computerResult);
-    }
-
+    //Random number to word
     function numbersToWords(number){
         switch (number) {
             case 0: 
@@ -16,16 +12,21 @@
             case 2:
                 return 'scissors';
             default:
-                undefined;
+                return undefined;
         }
     };
 
-    function getHumanChoice(){
-        let humanResult =  window.prompt("rock paper scissors", numbersToWords(defaultAnswer));
-        return humanResult.toLowerCase();
-    }
+    let divResults = document.createElement('div');
+    let body = document.querySelector('body');
 
-    function playRound(humanChoice, computerChoice){
+    body.appendChild(divResults);
+
+    function playRound(humanChoice){
+
+        if (!gameActive) return;
+
+        let computerChoice = numbersToWords(Math.floor(Math.random() * 3));
+        console.log(computerChoice)
 
         if (humanChoice == computerChoice) {
             alert('Draw');
@@ -35,40 +36,48 @@
         {
             alert('You win');
             humanScore += 1
-            return humanScore;
         } else {
             alert('Bot wins')
             computerScore += 1
-            return computerScore;
         }
+
+        updateScoreDisplay();
+
+        game();
     };
 
-    function playGame(){
-        playRound(getHumanChoice(), getComputerChoice());
 
-        playRound(getHumanChoice(), getComputerChoice());
 
-        playRound(getHumanChoice(), getComputerChoice());
+    let rock = document.getElementById('rock');
+    rock.addEventListener('click', () => {
+        playRound('rock');
+        console.log(humanScore);
+    });
 
-        playRound(getHumanChoice(), getComputerChoice());
 
-        playRound(getHumanChoice(), getComputerChoice());
+    let paper = document.getElementById('paper');
+    paper.addEventListener('click', () => {
+        playRound('paper');
+        console.log(humanScore, computerScore);
+    });
 
-        if (humanScore > computerScore){
-            alert('YOU ARE THE WINNER!!!!!!')
-        } else if (humanScore < computerScore){
-            alert('you\'re loser man.')
-        } else {
-            alert("ITS DRAAAAW")
-        }
-        
-        alert("Game over!!!!!")
-    }
 
-    playGame()
-
-    console.log(humanScore, computerScore);
+    let scissors = document.getElementById('scissors');
+    scissors.addEventListener('click', () => {
+        playRound('scissors');
+        console.log(humanScore, computerScore);
+    });
     
-
-
-
+    function updateScoreDisplay() {
+        divResults.textContent = `Score: Player ${humanScore} - ${computerScore} Bot`;
+    }
+    
+    function game(){
+        if (humanScore == 5 ){
+            alert('game over. you win')
+            gameActive = false;
+        } else if(computerScore == 5){
+            alert('game over. you lose')
+            gameActive = false;
+        }
+    }
